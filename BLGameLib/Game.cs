@@ -374,15 +374,15 @@ namespace BLGameLib
         {
             uint destinationCode = 0;
 
-            if (_maskConverter.TryGetCellRelationCaseByValue(cellValue, out CellRelationCase cellRelationCase))
+            if (_maskConverter.TryGetCellRelationCaseByValue(cellValue, out string cellRelationCase))
             {
                 if (IsFirstPlayerTurn)
                 {
-                    destinationCode = (uint)cellRelationCase.FirstCheckerMove;
+                    destinationCode = CellRelationState.firstCheckerMoveMask[cellRelationCase];
                 }
                 else
                 {
-                    destinationCode = (uint)cellRelationCase.SecondCheckerMove;
+                    destinationCode = CellRelationState.secondCheckerMoveMask[cellRelationCase];
                 }
             }
 
@@ -417,7 +417,7 @@ namespace BLGameLib
             {
                 // Получение взаимосвязей для конкретной фигуры
                 // Убрать Try ???
-                _maskConverter.TryGetCellRelationCaseByValue(boardCellValue, out CellRelationCase cellRelationCase);
+                _maskConverter.TryGetCellRelationCaseByValue(boardCellValue, out string cellRelationCase);
 
                 // Получение всех возможных ходов фигуры 
                 uint destinationCode = GetRandomMoveDestinationCode(boardCellValue); // для 1-го игрока

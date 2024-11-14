@@ -45,6 +45,7 @@
     <Compile Include="BoardCellVerticals.cs" />
     <Compile Include="Checker.cs" />
     <Compile Include="Masks\BeatMasks.cs" />
+    <Compile Include="Masks\CellRelationState.cs" />
     <Compile Include="Masks\FirstCheckerMoveMask.cs" />
     <Compile Include="Direction.cs" />
     <Compile Include="FieldNodes.cs" />
