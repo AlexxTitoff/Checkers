@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace ModelLibrary
 {
-    public struct ViewCoordinate
+    public struct CellView
     {
-        public string Name;
+        public string Name; // TODO: Properties
         public int Vertical;
         public int Horizontal;
 
-        public ViewCoordinate(string name, int vertical, int horizontal)
+        public CellView(string name, int vertical, int horizontal)
         {
             Name = name;
             Vertical = vertical;

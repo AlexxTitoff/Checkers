@@ -57,7 +57,7 @@
     <Compile Include="Masks\SecondCheckerMoveMask.cs" />
     <Compile Include="SimpleMoves.cs" />
     <Compile Include="UICellConvertor.cs" />
-    <Compile Include="ViewCoordinate.cs" />
+    <Compile Include="CellView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

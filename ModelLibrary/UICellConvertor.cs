@@ -11,40 +11,40 @@ namespace ModelLibrary
     public class UICellConvertor
     {
         private const int NUMBER_OF_CELLS = 32;
-        private readonly ViewCoordinate[] CELL_CCORDINATE = new ViewCoordinate[NUMBER_OF_CELLS]
+        private readonly CellView[] CELL_CCORDINATE = new CellView[NUMBER_OF_CELLS]
         {
-            new ViewCoordinate("a1", 7, 0),
-            new ViewCoordinate("c1", 7, 2),
-            new ViewCoordinate("e1", 7, 4),
-            new ViewCoordinate("g1", 7, 6),
-            new ViewCoordinate("b2", 6, 1),
-            new ViewCoordinate("d2", 6, 3),
-            new ViewCoordinate("f2", 6, 5),
-            new ViewCoordinate("h2", 6, 7),
-            new ViewCoordinate("a3", 5, 0),
-            new ViewCoordinate("c3", 5, 2),
-            new ViewCoordinate("e3", 5, 4),
-            new ViewCoordinate("g3", 5, 6),
-            new ViewCoordinate("b4", 4, 1),
-            new ViewCoordinate("d4", 4, 3),
-            new ViewCoordinate("f4", 4, 5),
-            new ViewCoordinate("h4", 4, 7),
-            new ViewCoordinate("a5", 3, 0),
-            new ViewCoordinate("c5", 3, 2),
-            new ViewCoordinate("e5", 3, 4),
-            new ViewCoordinate("g5", 3, 6),
-            new ViewCoordinate("b6", 2, 1),
-            new ViewCoordinate("d6", 2, 3),
-            new ViewCoordinate("f6", 2, 5),
-            new ViewCoordinate("h6", 2, 7),
-            new ViewCoordinate("a7", 1, 0),
-            new ViewCoordinate("c7", 1, 2),
-            new ViewCoordinate("e7", 1, 4),
-            new ViewCoordinate("g7", 1, 6),
-            new ViewCoordinate("b8", 0, 1),
-            new ViewCoordinate("d8", 0, 3),
-            new ViewCoordinate("f8", 0, 5),
-            new ViewCoordinate("h8", 0, 7),
+            new CellView("a1", 7, 0),
+            new CellView("c1", 7, 2),
+            new CellView("e1", 7, 4),
+            new CellView("g1", 7, 6),
+            new CellView("b2", 6, 1),
+            new CellView("d2", 6, 3),
+            new CellView("f2", 6, 5),
+            new CellView("h2", 6, 7),
+            new CellView("a3", 5, 0),
+            new CellView("c3", 5, 2),
+            new CellView("e3", 5, 4),
+            new CellView("g3", 5, 6),
+            new CellView("b4", 4, 1),
+            new CellView("d4", 4, 3),
+            new CellView("f4", 4, 5),
+            new CellView("h4", 4, 7),
+            new CellView("a5", 3, 0),
+            new CellView("c5", 3, 2),
+            new CellView("e5", 3, 4),
+            new CellView("g5", 3, 6),
+            new CellView("b6", 2, 1),
+            new CellView("d6", 2, 3),
+            new CellView("f6", 2, 5),
+            new CellView("h6", 2, 7),
+            new CellView("a7", 1, 0),
+            new CellView("c7", 1, 2),
+            new CellView("e7", 1, 4),
+            new CellView("g7", 1, 6),
+            new CellView("b8", 0, 1),
+            new CellView("d8", 0, 3),
+            new CellView("f8", 0, 5),
+            new CellView("h8", 0, 7),
         };
 
         #region Fields
@@ -77,7 +77,7 @@ namespace ModelLibrary
 
         #endregion
 
-        public string this[int index]
+        public string this[int index] // 0 reference ???
         {
             get
             {
@@ -121,6 +121,7 @@ namespace ModelLibrary
         {
             return CELL_CCORDINATE[index].Vertical;
         }
+
         public int GetHorizontalByIndex(int index)
         {
             return CELL_CCORDINATE[index].Horizontal;
