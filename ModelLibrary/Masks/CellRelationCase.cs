@@ -11,12 +11,12 @@ namespace ModelLibrary.Masks
     public class CellRelationCase
     {
         public string Name { get; private set; }
-        public BeatMasks Beat { get; private set; }
-        public BoardCellMask BoardCell { get; private set; }
+        public BeatMask Beat { get; private set; }
+        public BoardMask BoardCell { get; private set; }
         public FirstCheckerMoveMask FirstCheckerMove { get; private set; }
         public SecondCheckerMoveMask SecondCheckerMove { get; private set; }
 
-        public CellRelationCase(string name, BeatMasks beat, BoardCellMask boardCell,
+        public CellRelationCase(string name, BeatMask beat, BoardMask boardCell,
             FirstCheckerMoveMask firstCheckerMove, SecondCheckerMoveMask secondCheckerMove)
         {
             Name = name;

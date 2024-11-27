@@ -15,7 +15,6 @@ namespace ModelLibrary
         #region Fields
 
         private int _playerId; // 1 = Whites (FirstPlayer), 2 = Blacks (SecondPlayer)
-        private Checker[] _units;
         private int _numberOfUnits;
         private uint _unitsIntegralCode;
 
@@ -43,7 +42,6 @@ namespace ModelLibrary
             }
         }
 
-
         public int PlayerId { get { return _playerId; } }
 
         #endregion
@@ -54,36 +52,9 @@ namespace ModelLibrary
         {
             _numberOfUnits = INITIAL_NUMBER_OF_UNITS;
             _playerId = playerId;
-            _units = new Checker[_numberOfUnits];
         }
 
         #endregion
 
-        public Checker this[int index]
-        {
-            get
-            {
-                return _units[index];
-            }
-            set
-            {
-                _units[index] = value;
-            }
-        }
-
-        public bool IsValidFigure(int index)
-        {
-            return _units[index] != null;
-        }
-
-        public BoardCellMask GetFigureCellName(int index)
-        {
-            return this[index].CheckerNode.CellName;
-        }
-
-        public bool IsKing(int index)
-        {
-            return _units[index] is King;
-        }
     }
 }

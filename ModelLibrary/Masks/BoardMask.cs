@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ModelLibrary.Masks
 {
     [Flags]
-    public enum BoardCellMask : uint
+    public enum BoardMask : uint
     {
         a1 = (uint)1 << 0,
         c1 = (uint)1 << 1,

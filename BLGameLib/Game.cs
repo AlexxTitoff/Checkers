@@ -24,13 +24,9 @@ namespace BLGameLib
         #region Fields
 
         private bool _isFirstPlayerTurn; //Determines, if the turn of move in the game is Whites'(true)
-        private FieldNodes _fieldNodes;
         private PlayerState _firstPlayerFigures;
         private PlayerState _secondPlayerFigures;
         private Board _maskConverter;
-
-        public int FirstPlayerNumberOfFigures { get => _firstPlayerFigures.NumberOfUnits; }
-        public int SecondPlayerNumberOfFigures { get => _secondPlayerFigures.NumberOfUnits; }
 
         public uint FirstPlayerUnitsIntegralCode
         {
@@ -73,12 +69,11 @@ namespace BLGameLib
 
         #region ctor
 
-        public Game(/*UI view, */FieldNodes fieldNodes)
+        public Game()
         {
             _firstPlayerFigures = new PlayerState(1);
             _secondPlayerFigures = new PlayerState(2);
             _isFirstPlayerTurn = true;
-            _fieldNodes = fieldNodes;
             _maskConverter = new Board();
 
             Initialize();
@@ -86,72 +81,10 @@ namespace BLGameLib
 
         #endregion
 
-        public Checker this[int sideOfFigures, int index]
-        {
-            get
-            {
-                if (sideOfFigures == 1)
-                {
-                    return _firstPlayerFigures[index];
-                }
-                else
-                {
-                    return _secondPlayerFigures[index];
-                }
-            }
-            set
-            {
-                if (sideOfFigures == 1)
-                {
-                    _firstPlayerFigures[index] = value;
-                }
-                else
-                {
-                    _secondPlayerFigures[index] = value;
-                }
-            }
-        }
-
-        public int GetCountOfFigures(int sideOfFigures)
-        {
-            if (sideOfFigures == 1)
-            {
-                return _firstPlayerFigures.NumberOfUnits;
-            }
-            else
-            {
-                return _secondPlayerFigures.NumberOfUnits;
-            }
-        }
-
-        public BoardCellMask GetBoardCellMaskByIndex(int sideOfFigures, int index)
-        {
-            if (sideOfFigures == 1)
-            {
-                return _firstPlayerFigures[index].CheckerNode.CellName;
-            }
-            else
-            {
-                return _secondPlayerFigures[index].CheckerNode.CellName;
-            }
-        }
-
-        public bool IsKingOfFigures(int sideOfFigures, int index)
-        {
-            if (sideOfFigures == 1)
-            {
-                return _firstPlayerFigures.IsKing(index);
-            }
-            else
-            {
-                return _secondPlayerFigures.IsKing(index);
-            }
-        }
-
         public void Initialize()
         {
             StartBuilder source = new StartBuilder(this);
-            source.AddCheckers(_fieldNodes);
+            source.AddStartCheckers();
         }
 
         public void ChangeTurn()
@@ -159,156 +92,12 @@ namespace BLGameLib
             _isFirstPlayerTurn = !(_isFirstPlayerTurn);
         }
 
-        public void SoftRemoveFigure(int index) // TODO: Expand to Masks
+        public int GetIndexByCode(uint code)
         {
-            if (_isFirstPlayerTurn)
-            {
-                if (_firstPlayerFigures.IsValidFigure(index))
-                {
-                    _firstPlayerFigures[index] = null;
-                }
-                else
-                {
-                    throw new NotImplementedException(); // TODO
-                }
-            }
-            else
-            {
-                if (_secondPlayerFigures.IsValidFigure(index))
-                {
-                    _secondPlayerFigures[index] = null;
-                }
-                else
-                {
-                    throw new NotImplementedException(); // TODO
-                }
-            }
-        }
-
-        private bool IsAvailableFigureCellValue(uint startCellValue)
-        {
-            bool result = false;
-            startCellValue = 0;
-
-            if (IsFirstPlayerTurn)
-            {
-                if ((FirstPlayerUnitsIntegralCode & startCellValue) != 0)
-                {
-                    result = true;
-                }
-            }
-            else
-            {
-                if ((SecondPlayerUnitsIntegralCode & startCellValue) != 0)
-                {
-                    result = true;
-                }
-            }
+            _maskConverter.TryGetMaskIndexByValue(code, out int result);
 
             return result;
         }
-
-        #region MoveByNameMethods
-
-        // TODO: expand to Nodes + IsFirstPlayerTurn
-        public bool TryMoveFigureByCellName(string startCellName, string destinationCellName)
-        {
-            bool result = false;
-
-            if (IsPossibleStartCellName(startCellName, out uint startCellValue)
-                && IsPossibleMoveDestinationCell(startCellName, destinationCellName,
-                out uint destinationCellValue))
-            {
-                if (IsFirstPlayerTurn)
-                {
-                    FirstPlayerUnitsIntegralCode -= startCellValue;
-                    FirstPlayerUnitsIntegralCode += destinationCellValue;
-                }
-                else
-                {
-                    SecondPlayerUnitsIntegralCode -= startCellValue;
-                    SecondPlayerUnitsIntegralCode += destinationCellValue;
-                }
-
-                ChangeTurn();
-                result = true;
-            }
-
-            return result;
-        }
-
-        private bool IsPossibleStartCellName(string startCellName, out uint startCellValue)
-        {
-            bool result = false;
-            startCellValue = 0;
-
-            if (!Board.TryGetMaskValueByName(startCellName, typeof(BoardCellMask),
-                out uint startCellMaskValue))
-            {
-                return false;
-            }
-
-            startCellValue = startCellMaskValue;
-
-            if (IsFirstPlayerTurn)
-            {
-                if ((FirstPlayerUnitsIntegralCode & startCellValue) != 0)
-                {
-                    result = true;
-                }
-            }
-            else
-            {
-                if ((SecondPlayerUnitsIntegralCode & startCellValue) != 0)
-                {
-                    result = true;
-                }
-            }
-
-            return result;
-        }
-
-        private bool IsPossibleMoveDestinationCell(string startCellName, string destinationCellName,
-            out uint destinationCellValue)
-        {
-            bool result = false;
-            destinationCellValue = 0;
-
-            if (!Board.TryGetMaskValueByName(destinationCellName, typeof(BoardCellMask),
-                    out uint destinationCellMaskValue)
-                && ((FirstPlayerUnitsIntegralCode & destinationCellMaskValue) == 0)
-                && ((SecondPlayerUnitsIntegralCode & destinationCellMaskValue) == 0))
-            {
-                return false;
-            }
-
-            destinationCellValue = destinationCellMaskValue;
-
-            if (IsFirstPlayerTurn)
-            {
-                Board.TryGetMaskValueByName(startCellName, typeof(FirstCheckerMoveMask),
-                        out uint firstCheckerMoveMaskValue);
-
-                if ((firstCheckerMoveMaskValue & destinationCellValue) != 0)
-                {
-                    result = true;
-                }
-            }
-            else
-            {
-                Board.TryGetMaskValueByName(startCellName, typeof(FirstCheckerMoveMask),
-                        out uint secondCheckerMoveMaskValue);
-
-                if ((secondCheckerMoveMaskValue & destinationCellValue) != 0)
-                {
-                    result = true;
-                }
-            }
-
-            return result;
-        }
-
-        #endregion
 
         #region RandomMoveMethods
 

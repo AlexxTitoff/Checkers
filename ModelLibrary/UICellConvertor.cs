@@ -11,7 +11,7 @@ namespace ModelLibrary
     public class UICellConvertor
     {
         private const int NUMBER_OF_CELLS = 32;
-        private readonly CellView[] CELL_CCORDINATE = new CellView[NUMBER_OF_CELLS]
+        private readonly CellView[] CELL_COORDINATE = new CellView[NUMBER_OF_CELLS]
         {
             new CellView("a1", 7, 0),
             new CellView("c1", 7, 2),
@@ -71,60 +71,20 @@ namespace ModelLibrary
 
             for (int i = 0; i < NUMBER_OF_CELLS; i++)
             {
-                _cellNames[i] = CELL_CCORDINATE[i].Name;
+                _cellNames[i] = CELL_COORDINATE[i].Name;
             }
         }
 
         #endregion
 
-        public string this[int index] // 0 reference ???
-        {
-            get
-            {
-                return _cellNames[index];
-            }
-        }
-
-        public void GetCoordinatesByMask(BoardCellMask cellMask, out int vertical, out int horizontal)
-        {
-            vertical = -1;
-            horizontal = -1;
-
-            string name = cellMask.ToString();
-
-            for (int i = 0; i < NUMBER_OF_CELLS; i++)
-            {
-                if (Equals(_cellNames[i], name))
-                {
-                    vertical = CELL_CCORDINATE[i].Vertical;
-                    horizontal = CELL_CCORDINATE[i].Horizontal;
-                }
-            }
-        }
-
-        public void GetCoordinatesByName(string cellName, out int vertical, out int horizontal)
-        {
-            vertical = -1;
-            horizontal = -1;
-
-            for (int i = 0; i < NUMBER_OF_CELLS; i++)
-            {
-                if (Equals(_cellNames[i], cellName))
-                {
-                    vertical = CELL_CCORDINATE[i].Vertical;
-                    horizontal = CELL_CCORDINATE[i].Horizontal;
-                }
-            }
-        }
-
         public int GetVerticalByIndex(int index)
         {
-            return CELL_CCORDINATE[index].Vertical;
+            return CELL_COORDINATE[index].Vertical;
         }
 
         public int GetHorizontalByIndex(int index)
         {
-            return CELL_CCORDINATE[index].Horizontal;
+            return CELL_COORDINATE[index].Horizontal;
         }
 
     }

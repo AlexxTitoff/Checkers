@@ -41,21 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BoardCellHorizontals.cs" />
-    <Compile Include="BoardCellVerticals.cs" />
-    <Compile Include="Checker.cs" />
-    <Compile Include="Masks\BeatMasks.cs" />
+    <Compile Include="Masks\BeatMask.cs" />
+    <Compile Include="Masks\CellRelationBox.cs" />
     <Compile Include="Masks\FirstCheckerMoveMask.cs" />
-    <Compile Include="Direction.cs" />
-    <Compile Include="FieldNodes.cs" />
     <Compile Include="Masks\CellRelationCase.cs" />
     <Compile Include="PlayerState.cs" />
-    <Compile Include="King.cs" />
-    <Compile Include="Node.cs" />
-    <Compile Include="Masks\BoardCellMask.cs" />
+    <Compile Include="Masks\BoardMask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Masks\SecondCheckerMoveMask.cs" />
-    <Compile Include="SimpleMoves.cs" />
     <Compile Include="UICellConvertor.cs" />
     <Compile Include="CellView.cs" />
   </ItemGroup>

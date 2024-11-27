@@ -17,15 +17,11 @@ namespace MainApp
         public static void Main(string[] args)
         {
             ConsoleController controller = new ConsoleController();
-
-            UI consoleView = new UI(/*controller*/);
+            UI consoleView = new UI();
             consoleView.PlotEmptyBoard();
             consoleView.PrintMenu();
 
-            FieldNodes fieldNodes = FieldNodes.GetInstance();
-            FieldsInitializer fieldsInitializer = new FieldsInitializer(fieldNodes);
-
-            Game currentGame = new Game(fieldNodes);
+            Game currentGame = new Game();
             consoleView.PlotGame(currentGame);
 
             controller.ExecuteOperations(currentGame, consoleView);

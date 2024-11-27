@@ -8,9 +8,9 @@ namespace ModelLibrary
 {
     public struct CellView
     {
-        public string Name; // TODO: Properties
-        public int Vertical;
-        public int Horizontal;
+        public string Name { get; private set; } 
+        public int Vertical { get; private set; }
+        public int Horizontal { get; private set; }
 
         public CellView(string name, int vertical, int horizontal)
         {
