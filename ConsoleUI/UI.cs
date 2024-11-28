@@ -38,12 +38,14 @@ namespace ConsoleUILib
         #endregion
 
         private UICellConvertor _convertor;
+        //private Game _currentGame;
 
         #region ctor
 
-        public UI()
+        public UI(/*Game currentGame*/)
         {
             _convertor = new UICellConvertor();
+            //_currentGame = currentGame;
         }
 
         #endregion
@@ -69,28 +71,20 @@ namespace ConsoleUILib
 
         }
 
-        public void PlotGame(Game currentGame)
+        public void PlotGame(List<int> indexList1, List<int> indexList2)
         {
-            uint integralCode = currentGame.FirstPlayerUnitsIntegralCode;
             Console.ForegroundColor = FIRST_COLOR;
-            List<uint> integralCodeList = Game.ToSingleCodeList(integralCode);
 
-            foreach (var item in integralCodeList)
+            foreach (var item in indexList1)
             {
-                int index = currentGame.GetIndexByCode(item);
-
-                PlotUnitByIndex(index);
+                PlotUnitByIndex(item);
             }
 
-            integralCode = currentGame.SecondPlayerUnitsIntegralCode;
             Console.ForegroundColor = SECOND_COLOR;
-            integralCodeList = Game.ToSingleCodeList(integralCode);
 
-            foreach (var item in integralCodeList)
+            foreach (var item in indexList2)
             {
-                int index = currentGame.GetIndexByCode(item);
-
-                PlotUnitByIndex(index);
+                PlotUnitByIndex(item);
             }
         }
 
@@ -136,18 +130,19 @@ namespace ConsoleUILib
             Console.WriteLine("P - ask for return to the Previous move");
         }
 
-        public void RandomMoveFigure(Game currentGame)
+        public void PlotMove(bool isFirstPlayerTurn,
+            int startCellIndex, int destinationCellIndex)
         {
-            if (currentGame.IsFirstPlayerTurn)
+            if (isFirstPlayerTurn)
             {
-                Console.ForegroundColor = FIRST_COLOR;
+                Console.ForegroundColor = SECOND_COLOR; // TODO: очередность хода уже поменялась. Как с боем?
             }
             else
             {
-                Console.ForegroundColor = SECOND_COLOR;
+                Console.ForegroundColor = FIRST_COLOR;
             }
 
-            if (currentGame.TryGetRandomMoveIndexes(out int startCellIndex, out int destinationCellIndex))
+            if (startCellIndex >= 0)
             {
 
                 EraseUnitByIndex(startCellIndex);

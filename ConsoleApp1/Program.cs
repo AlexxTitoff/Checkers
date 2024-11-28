@@ -16,15 +16,14 @@ namespace MainApp
     {
         public static void Main(string[] args)
         {
-            ConsoleController controller = new ConsoleController();
             UI consoleView = new UI();
             consoleView.PlotEmptyBoard();
             consoleView.PrintMenu();
 
             Game currentGame = new Game();
-            consoleView.PlotGame(currentGame);
 
-            controller.ExecuteOperations(currentGame, consoleView);
+            ConsoleController controller = new ConsoleController(consoleView, currentGame);
+            controller.ExecuteOperations();
 
             // TODO: попробовать печать с Flags & без них
             //Console.WriteLine("{0}", BoardCellMask.a1);

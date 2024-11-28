@@ -92,16 +92,27 @@ namespace BLGameLib
             _isFirstPlayerTurn = !(_isFirstPlayerTurn);
         }
 
-        public int GetIndexByCode(uint code)
+        public void GetIndexLists(out List<int> indexList1, out List<int> indexList2)
         {
-            _maskConverter.TryGetMaskIndexByValue(code, out int result);
+            indexList1 = GetIndexList(_firstPlayerFigures.UnitsIntegralCode);
+            indexList2 = GetIndexList(_secondPlayerFigures.UnitsIntegralCode);
+        }
+
+        private List<int> GetIndexList(uint code)
+        {
+            List<uint> singleCodeList = ToSingleCodeList(code);
+            List<int> result = new List<int>(singleCodeList.Count);
+
+            foreach (var item in singleCodeList)
+            {
+                _maskConverter.TryGetMaskIndexByValue(item, out int index);
+                result.Add(index);
+            }
 
             return result;
         }
 
-        #region RandomMoveMethods
-
-        public static List<uint> ToSingleCodeList(uint code) // Добавить такие поля List в CellRelationCase ???
+        private static List<uint> ToSingleCodeList(uint code) // Добавить такие поля List в CellRelationCase ???
         {
             var result = new List<uint>(CODE_LENGTH);
             uint singleCode = 0;
@@ -119,10 +130,7 @@ namespace BLGameLib
             return result;
         }
 
-        public static uint GetRandomValue(List<uint> valueList)
-        {
-            return valueList[rnd.Next(0, valueList.Count)];
-        }
+        #region RandomMoveMethods
 
         public bool TryGetRandomMoveIndexes(out int startCellIndex, out int destinationCellIndex)
         {
@@ -139,7 +147,7 @@ namespace BLGameLib
         public bool TryRandomMoveFigure(out uint startCellValue, out uint destinationCellValue)
         {
             bool result = false;
-            TryGetFinalValues(out startCellValue, out destinationCellValue);
+            TryGetRandomFinalValues(out startCellValue, out destinationCellValue);
 
             if (IsFirstPlayerTurn)
             {
@@ -155,11 +163,10 @@ namespace BLGameLib
             ChangeTurn();
             result = true;
 
-
             return result;
         }
 
-        private uint GetRandomMoveDestinationCode(uint cellValue)
+        private uint GetMoveDestinationCode(uint cellValue)
         {
             uint destinationCode = 0;
 
@@ -178,7 +185,7 @@ namespace BLGameLib
             return destinationCode;
         }
 
-        private bool TryGetFinalValues(out uint startCellValue, out uint destinationCellValue)
+        private bool TryGetRandomFinalValues(out uint startCellValue, out uint destinationCellValue)
         {
             bool result = false;
             
@@ -209,7 +216,7 @@ namespace BLGameLib
                 _maskConverter.TryGetCellRelationCaseByValue(boardCellValue, out CellRelationCase cellRelationCase);
 
                 // Получение всех возможных ходов фигуры 
-                uint destinationCode = GetRandomMoveDestinationCode(boardCellValue); // для 1-го игрока
+                uint destinationCode = GetMoveDestinationCode(boardCellValue); // для 1-го игрока
                 singleDestinationList = ToSingleCodeList(destinationCode);
 
                 foreach (var singleDestination in singleDestinationList)
